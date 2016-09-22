@@ -50,7 +50,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', end
             var longitude = result.results["0"].geometry.location.lng;
             console.log("The lat and long is " + latitude + ", " + longitude);
             console.log(result.results["0"].address_components[1].long_name);
-            $("#city").text(result.results["0"].address_components[1].long_name);
+            $("#city").text(result.results["0"].address_components[1].long_name + ", " + result.results["0"].address_components[3].short_name);
             
             
 
@@ -68,7 +68,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', end
 
 
           function darksky_Complete(result){
-              
+              $("#temp").text(Math.round(result.currently.temperature) + "\260");
+              $("#summary").text(result.currently.summary);
+              $("#high").text(Math.round(result.daily.data[0].temperatureMax) + "\260");
+              $("#low").text(Math.round(result.daily.data[0].temperatureMin) + "\260");
+              $("#rain").text(result.currently.precipProbability * 100);
+
           }
 
 
@@ -150,190 +155,49 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', end
             <div class="col-md-2 col-md-offset-3 col-md-pull-2" style="color: black; border-radius:4pt; background-image: url(images/sunny.jpg); background-size: contain; height: 260pt; width: 195pt">
 
                 <div class="row">
-                    <div class="col-md-4">
-                         <p id="city" style="font-size: 20pt">Placeholder,</p>
+                    <div class="col-md-4" style="width: 100%">
+                         <p id="city" style="font-size: 20pt; text-align: center">Paintsville, Ky</p>
                     </div>
-                    <div class="col-md-2">
-                        <p id="state" style="font-size: 20pt">Ky</p>
-                    </div>
+                    
+                        
+                   
                 </div>
                 <br />
                 <div class="row">
                     <div class="col-md-12">
-                        <p style="text-align:center; font-size: 50pt">79&#x2109</p>
+                        <p id="temp" style="text-align:center; font-size: 50pt">79&#x2109</p>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p id="summary" style="font-size: 20pt; text-align: center"></p>
+                    </div>
+                </div>
+
                 <br />
-                <br />
+
                 <div class="row">
                     <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-up" style="font-size: 20pt">83</span>
+                        <span id="high" class="glyphicon glyphicon-arrow-up" style="font-size: 20pt"></span>
                     </div>
                     <div class="col-md-4">
-                        <span class="glyphicon glyphicon-tint" style="font-size: 20pt">20%</span>
+                        <span id="rain" class="glyphicon glyphicon-tint" style="font-size: 20pt"></span>
                     </div>
                     <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-down" style="font-size: 20pt">72</span>
+                        <span id="low" class="glyphicon glyphicon-arrow-down" style="font-size: 20pt"></span>
                     </div>
                 </div>
+                    <br />
+                
 
             </div>
 
-            <!--Second Card-->
-            <div class="col-md-2 col-md-pull-1" style="color: black; border-radius:4pt; background-image: url(images/cloudy.jpg); background-size: contain; height: 260pt; width: 195pt">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 20pt">Paintsville, Ky</p>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 50pt">79&#x2109</p>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-up" style="font-size: 20pt">83</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-tint" style="font-size: 20pt">20%</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-down" style="font-size: 20pt">72</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <!--Third Card-->
-            <div class="col-md-2" style="color: black; border-radius:4pt; background-image: url(images/rain.jpg); background-size: contain; height: 260pt; width: 195pt">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 20pt">Paintsville, Ky</p>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 50pt">79&#x2109</p>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-up" style="font-size: 20pt">83</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-tint" style="font-size: 20pt">20%</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-down" style="font-size: 20pt">72</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <br />
-        <br />
-
-        <div class="row">
-            <!--Fourth Card-->
-            <div class="col-md-2 col-md-offset-3 col-md-pull-2" style="color: black; border-radius:4pt; background-image: url(images/sunny.jpg); background-size: contain; height: 260pt; width: 195pt">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 20pt">Paintsville, Ky</p>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 50pt">79&#x2109</p>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-up" style="font-size: 20pt">83</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-tint" style="font-size: 20pt">20%</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-down" style="font-size: 20pt">72</span>
-                    </div>
-                </div>
-
-            </div>
-            <!--Fifth Card-->
-            <div class="col-md-2 col-md-pull-1" style="color: black; border-radius:4pt; background-image: url(images/cloudy.jpg); background-size: contain; height: 260pt; width: 195pt">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 20pt">Paintsville, Ky</p>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 50pt">79&#x2109</p>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-up" style="font-size: 20pt">83</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-tint" style="font-size: 20pt">20%</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-down" style="font-size: 20pt">72</span>
-                    </div>
-                </div>
-
-            </div>
-            <!--Sixth Card-->
-            <div class="col-md-2" style="color: black; border-radius:4pt; background-image: url(images/rain.jpg); background-size: contain; height: 260pt; width: 195pt">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 20pt">Paintsville, Ky</p>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <p style="text-align:center; font-size: 50pt">79&#x2109</p>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-up" style="font-size: 20pt">83</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-tint" style="font-size: 20pt">20%</span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-arrow-down" style="font-size: 20pt">72</span>
-                    </div>
-                </div>
+            
 
             </div>
         </div>
-    </div>
+    
 
 
 </body>
