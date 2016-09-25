@@ -1,5 +1,6 @@
 <html>
 
+
 <head>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <!-- Latest compiled and minified CSS -->
@@ -14,190 +15,94 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
+    <script src="weatherly.js"></script>
+
 
 </head>
 
-<body style="background: rgba(226,226,226,1);
-background: -moz-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 19%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
-background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(226,226,226,1)), color-stop(19%, rgba(219,219,219,1)), color-stop(51%, rgba(209,209,209,1)), color-stop(100%, rgba(254,254,254,1)));
-background: -webkit-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 19%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
-background: -o-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 19%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
-background: -ms-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 19%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
-background: linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 19%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );">
+<body style="background: rgba(241,231,103,1);
+background: -moz-radial-gradient(center, ellipse cover, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(241,231,103,1)), color-stop(100%, rgba(254,182,69,1)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+background: radial-gradient(ellipse at center, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1e767', endColorstr='#feb645', GradientType=1 );">
 
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Weatherly</a>
-                <a style="text-align:right" class="navbar-brand" href="#"><span class="glyphicon glyphicon-plus"></span></a>
 
+
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+    <div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="nav navbar-brand" style="font-size: 20pt">Weatherly</span>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <div class="fb-share-button navbar-brand" data-href="https://christopherstanley14.github.io/weatherly/"
+                            data-layout="button" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchristopherstanley14.github.io%2Fweatherly%2F&amp;src=sdkpreparse">Share</a></div>
+                    </li>
+
+                </ul>
+                <div class="btn-group pull-right">
+                    <div class="dropdown pull-right">
+
+
+
+
+
+
+                        <button style="height: 35pt; width: 35pt" class="glyphicon glyphicon-plus dropdown-toggle pull-right" type="button" data-toggle="dropdown"></button>
+                        <ul style="width: 200px" class="dropdown-menu">
+                            <li>
+                                <label>Enter Location <input type="text" id="postalCode" placeholder="Postal Code" /></label>
+                                <button type="button" id="buttonLookUpZip">Lookup</button>
+                            </li>
+                    </div>
+                    </ul>
+                </div>
 
             </div>
-
-        </div>
-    </nav>
-
-    <script>
-     
-
-// ***************************
-        // **  Google Web Services  **
-        // ***************************
-
-        function lookupLatLong_Complete(result) {
-            var latitude = result.results["0"].geometry.location.lat;
-            var longitude = result.results["0"].geometry.location.lng;
-            console.log("The lat and long is " + latitude + ", " + longitude);
-            console.log(result.results["0"].address_components[1].long_name);
-            $("#city").text(result.results["0"].address_components[1].long_name + ", " + result.results["0"].address_components[3].short_name);
-            
-            
-
-
-              // Call to Dark Sky
-        $(function() {
-        var request = {
-        url: "https://api.darksky.net/forecast/ed7be92607845014ac1b22c8b2dcb545/" + latitude + "," + longitude,
-        dataType: "jsonp",
-        success: darksky_Complete
-    };
-    $.ajax(request);
-})
-        }
-
-
-          function darksky_Complete(result){
-              $("#temp").text(Math.round(result.currently.temperature) + "\260");
-              $("#summary").text(result.currently.summary);
-              $("#high").text(Math.round(result.daily.data[0].temperatureMax) + "\260");
-              $("#low").text(Math.round(result.daily.data[0].temperatureMin) + "\260");
-              $("#rain").text(result.currently.precipProbability * 100);
-
-          }
-
-
-
-
-
-        function lookupLatLong(city, state, postalCode) {
-            // Create the address.
-            var address = "";
-            if (postalCode.length != 0) {
-                address = postalCode.trim();
-            }
-            else if (city.length != 0 && state != 0) {
-                address = city.trim() + ", " + state;
-            }
-            else {
-                return; // they didn't give me anything valid, so exit
-            }
-
-            // Call Google's API.
-            var googleUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAQsMF6GQMAD_JlBLibE1ZprVVwxK0kfac";
-
-            var request = {
-                url: googleUrl,
-                success: lookupLatLong_Complete
-            };
-
-            $.ajax(request);
-        }
-
-        
-
-      
-
-
-  
-
-        // **********************
-        // **  Event Handlers  **
-        // **********************
-        function lookupWeatherForPostalCode_Click() {
-            var pcode = $("#postalCode").val();
-            lookupLatLong("", "", pcode);
-        }
-
-        // ***********************
-        // **  Document ready.  **
-        // ***********************
-
-        $(function() {
-            $("#lookupWeatherForPostalCode").on("click", lookupWeatherForPostalCode_Click)
-        });
-
-
-
-
-
-
-
-
-
- </script>
-
-
-  
-  
-  
-  
-    <div class="col-md-6 col-md-offset-4">
-        <label>Enter a postal code: <input type="text" id="postalCode" placeholder="postal code" /></label>
-        <button type="button" id="lookupWeatherForPostalCode">Lookup</button>
+        </nav>
     </div>
-
-
     <div class="container">
-        <div class="row" style="margin-top: 100pt">
+        <div class="row" id="cards">
+        </div>
 
-            <!--First Card -->
-            <div class="col-md-2 col-md-offset-3 col-md-pull-2" style="color: black; border-radius:4pt; background-image: url(images/sunny.jpg); background-size: contain; height: 260pt; width: 195pt">
 
-                <div class="row">
-                    <div class="col-md-4" style="width: 100%">
-                         <p id="city" style="font-size: 20pt; text-align: center">Paintsville, Ky</p>
-                    </div>
-                    
-                        
-                   
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <p id="temp" style="text-align:center; font-size: 50pt">79&#x2109</p>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <p id="summary" style="font-size: 20pt; text-align: center"></p>
-                    </div>
-                </div>
+        <div id="tempDiv">
+            <div id="remove" class="col-xs-10 col-sm-10 col-md-3 col-lg-3 col-xl-3" style="background-image: url(images/sunny.jpg); background-size: contain; height: 260pt; width: 195pt; border-radius: 7pt; margin: 30pt">
 
-                <br />
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <span id="high" class="glyphicon glyphicon-arrow-up" style="font-size: 20pt"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <span id="rain" class="glyphicon glyphicon-tint" style="font-size: 20pt"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <span id="low" class="glyphicon glyphicon-arrow-down" style="font-size: 20pt"></span>
-                    </div>
-                </div>
+                <center>
+                    <span style="font-size: 20pt">@NAME@ , @NAME2@</span>
+                    <br/>
+                    <h1 style="font-size: 50pt">@TEMP@</h1>
+                    <h3>@SUMMARY@</h3>
                     <br />
-                
+                    <span style="font-size: 20pt" class="glyphicon glyphicon-arrow-up">@MAX@</span>
+                    <span style="font-size: 20pt" class="glyphicon glyphicon-tint">@PERCENT@</span>
+                    <span style="font-size: 20pt" class="glyphicon glyphicon-arrow-down">@MIN@</span>
 
-            </div>
-
-            
+                </center>
 
             </div>
         </div>
-    
+    </div>
 
 
 </body>
