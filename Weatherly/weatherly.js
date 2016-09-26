@@ -1,7 +1,7 @@
 function lookupLatLong(city, state, postalCode) {
     
     var address = "";
-    if (postalCode.length != 0) {
+    if (postalCode.length != 0) { 
         address = postalCode.trim();
     }
     else if (city.length != 0 && state != 0) {
@@ -31,7 +31,7 @@ function lookupWeatherForZip() {
 
 function lookUpWeather_complete(request){
     
-    var weatherResult = {
+    var weather = {
         currentTemp: Math.round(request.currently.temperature) + "&deg;F",
         highTemp: Math.round(request.daily.data[0].temperatureMax) + "&deg;F",
         precipProb: request.currently.precipProbability * 100 + "%",
@@ -40,7 +40,7 @@ function lookUpWeather_complete(request){
 
     };
 
-    var html = cardMaker(weatherResult);
+    var html = cardMaker(weather);
     $("#cards").append(html);
 
 };
@@ -71,17 +71,17 @@ function lookupLatLong_Complete(result) {
 
 }
 
-function cardMaker (weatherData) {
+function cardMaker (data) {
 
     var template = $("#tempDiv").html();
 
     template = template.replace("@NAME@", longName1);
     template = template.replace("@NAME2@", shortName1);
-    template = template.replace("@TEMP@", weatherData.currentTemp);
-    template = template.replace("@SUMMARY@", weatherData.weatherSummary);
-    template = template.replace("@MIN@", weatherData.lowTemp);
-    template = template.replace("@PERCENT@", weatherData.precipProb);
-    template = template.replace("@MAX@", weatherData.highTemp);
+    template = template.replace("@TEMP@", data.currentTemp);
+    template = template.replace("@SUMMARY@", data.weatherSummary);
+    template = template.replace("@MIN@", data.lowTemp);
+    template = template.replace("@PERCENT@", data.precipProb);
+    template = template.replace("@MAX@", data.highTemp);
 
     return template; 
 }
