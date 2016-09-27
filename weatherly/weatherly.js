@@ -73,7 +73,7 @@ function lookupLatLong_Complete(result) {
 
 function cardMaker (data) {
 
-    var template = $("#tempDiv").html();
+    var template = $("#div").html();
 
     template = template.replace("@NAME@", longName1);
     template = template.replace("@NAME2@", shortName1);
@@ -89,7 +89,7 @@ function cardMaker (data) {
 
 $(function () {
     $("#buttonLookUpZip").on("click", lookupWeatherForZip);
-    $("#tempDiv").hide();
+    $("#div").hide();
     $(document).on("click", "#removeB", function(){
         $(this).parent("#remove").fadeOut();
     });
