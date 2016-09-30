@@ -8,3 +8,11 @@ background: -ms-radial-gradient(center, ellipse cover, rgba(227,20,20,1) 0%, rgb
 background: radial-gradient(ellipse at center, rgba(227,20,20,1) 0%, rgba(0,0,0,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e31414', endColorstr='#000000', GradientType=1 );
 }
+
+
+h1 {
+    font-size: 50pt;
+    color: white;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
